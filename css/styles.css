@@ -1,0 +1,203 @@
+body {
+  background-color: #000;
+}
+
+.flip-card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: 1px solid #000;
+  perspective: 1000px;
+  border-radius: 15px;
+  width: 18%;
+  height: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* flip-card-inner 是 flip-card 的子元素，它控制卡片的 翻转动画，
+确保前后面翻转时能保持 3D 立体感。 */
+.flip-card-inner {
+  text-align: center;
+  transition: transform 5s;
+  transform-style: preserve-3d;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(241, 13, 13, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front {
+  display: flex;
+  flex-direction: column; /* 让内容垂直排列 */
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: transparent; /* 让整个卡片透明 */
+}
+
+.flip-card-img-container {
+  background-color: rgba(
+    191,
+    118,
+    191,
+    0.212
+  ); /* 让图片区域有自己的背景，不受 flip-card-front 影响 */
+}
+
+.flip-card-img-container img {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+/* flip-card-content 负责存放标题和简介 */
+.flip-card-content {
+  background-color: #bbb; /* 这里是灰色背景，确保只覆盖文字部分 */
+  padding: 10px;
+  text-align: center;
+}
+
+.flip-card-content h3 {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.flip-card-content p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row1 {
+  display: flex;
+  flex-wrap: wrap; /* 允许换行 */
+  gap: 30px; /* 让卡片之间有间距 */
+  justify-content: center; /* 让所有卡片居中对齐 */
+  align-items: center; /* 垂直对齐 */
+}
+
+.container-fluid2 {
+  font-size: 30px;
+  text-align: center;
+  color: #e3e4e1b4;
+  background-color: #42093fe5;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+
+.container-fluid3 {
+  text-align: center;
+  color: #1a1a1d;
+  background-color: palevioletred;
+  padding: 20px;
+}
+
+.flip-card-front p {
+  max-height: 13em;
+  overflow: hidden; /* 隐藏溢出内容 */
+  text-overflow: ellipsis; /* 添加省略号 */
+  white-space: nowrap; /* 防止换行 */
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #1a1a1d;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  border-radius: 0%;
+}
+
+.navbar-brand {
+  color: #c3073f;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/* 对应导航菜单中的每个链接（例如 Home、Movies、TV Shows、People）：
+ */
+.nav.navbar-nav li a {
+  color: #c3073f;
+  font-size: 16px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.nav.navbar-nav li a:hover {
+  background-color: #c3073f;
+  color: white;
+}
+
+/* Navbar Form Styles */
+.navbar-form.navbar-left {
+  padding-left: 465px;
+}
+
+.form-select.mr-sm-2 {
+  width: 100px;
+  height: 34px;
+  border-radius: 5px;
+  background-color: #c3073f;
+  color: #d6d6d6;
+  padding-left: 15px;
+}
+
+.input-group {
+  margin-left: 10px;
+  display: flex; /* 确保输入框和按钮在同一行 */
+  width: 400px;
+}
+
+.input-group input[type='text'] {
+  padding: 5px;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.input-group-btn button {
+  background-color: #c3073f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.form-control {
+  width: 250px; /* 输入框的宽度 */
+  height: 34px; /* 输入框的高度 */
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.input-group-btn button i {
+  font-size: 18px;
+}
+
+.glyphicon.glyphicon-search {
+  color: white; /* 搜索图标颜色 */
+}
+
+/* Responsive Design for Navbar */
+@media screen and (width <= 768px) {
+  .navbar-form.navbar-left {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .navbar-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .navbar-nav li {
+    margin-right: 20px;
+  }
+}
