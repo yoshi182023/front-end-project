@@ -102,11 +102,14 @@ function findMovies() {
     if (searchTerm && searchTerm.length > 0) {
       $searchList.classList.remove('hide-search-list');
       loadMovies(searchTerm); // 加载电影数据
+      console.log('Searching movies...');
     } else {
       $searchList.classList.add('hide-search-list'); // 隐藏搜索结果列表
+      console.log('Searching movies...');
     }
   }
 }
+console.log(findMovies());
 // 显示电影列表
 function displayMovieList(movies) {
   if ($searchList) {
@@ -118,7 +121,7 @@ function displayMovieList(movies) {
       $movieListItem.classList.add('search-list-item'); // 添加 CSS 类
       const moviePoster =
         // 如果电影有海报，使用海报 URL；否则使用默认图片。
-        movies[idx].Poster != 'N/A'
+        movies[idx].Poster !== 'N/A'
           ? movies[idx].Poster
           : 'image_not_found.png'; // 处理电影海报 URL
       $movieListItem.innerHTML = `
@@ -157,6 +160,30 @@ function loadMovieDetails() {
     console.error('Search list element not found!');
   }
 }
+function addToFavorites(details) {
+  console.log('Adding movie:', details);
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  console.log('Initial favorites:', favorites);
+  // 打印每部电影的 imdbID
+  favorites.forEach((movie, index) => {
+    console.log(`Favorite ${index + 1}:`, movie.imdbID);
+  });
+  const isAlreadyFavorite = favorites.some(
+    (movie) => movie.imdbID === details.imdbID,
+  );
+  console.log('Is already favorite?', isAlreadyFavorite);
+  if (isAlreadyFavorite) {
+    alert('This movie is already in your favorites!');
+    return;
+  }
+  favorites.push(details);
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  console.log(
+    'Updated favorites:',
+    JSON.parse(localStorage.getItem('favorites') || '[]'),
+  );
+  alert(`"${details.Title}" has been added to your favorites!`);
+}
 // 显示电影详细信息
 function displayMovieDetails(details) {
   if (!resultGrid) {
@@ -166,11 +193,31 @@ function displayMovieDetails(details) {
   resultGrid.innerHTML = `
     <div class = "movie-poster">
         <img src = "${details.Poster !== 'N/A' ? details.Poster : 'image_not_found.png'}" alt = "movie poster">
+
+
+
+       <button class="btn btn-default favorite-btn" data-title="${details.Title}" data-poster="${details.Poster}" onclick='addToFavorites(${JSON.stringify(details)})'>
+
+            Add to Favourites
+            <svg
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                class="bi bi-heart-fill"
+                fill="red"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                />
+            </svg>
+        </button>  </div>
     </div>
     <div class = "movie-info">
         <h3 class = "movie-title">${details.Title}</h3>
         <ul class = "movie-misc-info">
-            <li class = "year">Year: ${details.Year}</li>
+            <li class = "year"> Year: ${details.Year}</li>
             <li class = "rated">Ratings: ${details.Rated}</li>
             <li class = "released">Released: ${details.Released}</li>
         </ul>
@@ -180,10 +227,32 @@ function displayMovieDetails(details) {
         <p class = "plot"><b>Plot:</b> ${details.Plot}</p>
         <p class = "language"><b>Language:</b> ${details.Language}</p>
         <p class = "awards"><b><i class = "fas fa-award"></i></b> ${details.Awards}</p>
+
     </div>
     `; // 设置电影详细信息的 HTML 内容
-  console.log(resultGrid);
+  console.log('result', resultGrid);
+  // 绑定按钮点击事件
+  // 确保按钮存在并添加事件监听
+  const favButton = resultGrid.querySelector('.favorite-btn');
+  if (favButton) {
+    favButton.addEventListener('click', () => {
+      // 确保传递 details 参数到 addToFavorites
+      addToFavorites(details);
+    });
+  }
+  console.log('result', resultGrid);
 }
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.favorite-btn').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      const target = event.target;
+      const title = target.getAttribute('data-title');
+      const poster = target.getAttribute('data-poster');
+      // addToFavorites(details);
+      console.log(localStorage.getItem('favorites'));
+    });
+  });
+});
 // 点击页面其他区域时隐藏搜索结果列表
 window.addEventListener('click', (event) => {
   const target = event.target; // 类型断言为 HTMLElement
@@ -192,3 +261,55 @@ window.addEventListener('click', (event) => {
     $searchList?.classList.add('hide-search-list'); // 使用可选链
   }
 });
+function displayFavorites() {
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const favoritesContainer = document.getElementById('favorites-container');
+  if (favoritesContainer) {
+    favoritesContainer.innerHTML = '';
+    if (favorites.length === 0) {
+      favoritesContainer.innerHTML = '<p>暂无收藏的电影。</p>';
+      return;
+    }
+    favorites.forEach((movie) => {
+      const movieElement = document.createElement('div');
+      movieElement.className = 'favorite-movie';
+      movieElement.innerHTML = `
+        <img src="${movie.Poster}" alt="${movie.Title}">
+        <h3>${movie.Title}</h3>
+        <p>${movie.Year}</p>
+        <button onclick="removeFromFavorites('${movie.imdbID}')">Remove</button>
+      `;
+      favoritesContainer.appendChild(movieElement);
+    });
+  }
+}
+function loadFavorites() {
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const container = document.getElementById('favorites-list');
+  if (!container) {
+    console.log('No container found');
+    return;
+  }
+  console.log(favorites); // 检查从 localStorage 获取的数据
+  if (favorites.length === 0) {
+    container.innerHTML = '<p>暂无收藏的电影</p>';
+    return;
+  }
+  favorites.forEach((details) => {
+    const movieDiv = document.createElement('div');
+    movieDiv.innerHTML = `
+            <h3>${details.Title}</h3>
+            <img src="${details.Poster}" alt="${details.Title}" width="100">
+            <button onclick="removeFromFavorites('${details.imdbID}')">移除</button>
+        `;
+    container.appendChild(movieDiv);
+  });
+}
+// function removeFromFavorites(imdbID: string) {
+//   let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+//   favorites = favorites.filter((movie) => movie.imdbID !== imdbID);
+//   localStorage.setItem('favorites', JSON.stringify(favorites));
+//   loadFavorites(); // 重新加载列表
+// }
+// // 页面加载时执行
+// document.addEventListener('DOMContentLoaded', loadFavorites);

@@ -1,5 +1,21 @@
 body {
   background-color: #000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.remove-btn {
+  border-radius: 0.25rem;
+  border-radius: 0.35rem;
+  border: none;
+  font-size: 1rem;
+  background-color: palevioletred;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #c3073f;
+  transform: scale(1.4) rotate(3deg); /* Combined scale and rotate */
+  transition: transform 0.2s ease-in-out;
 }
 
 .flip-card {
@@ -127,6 +143,12 @@ body {
   font-size: 16px;
   padding: 8px 16px;
   text-decoration: none;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: left; /* 可根据需求调整 */
+  border-color: #c3073f;
 }
 
 .nav.navbar-nav li a:hover {
@@ -339,6 +361,7 @@ body {
 
 .movie-poster img {
   max-width: 300px;
+  max-height: 400px;
   margin: 0 auto;
   border: 4px solid #fff;
   align-items: center;
@@ -368,6 +391,7 @@ body {
   -ms-flex-pack: center;
   justify-content: center;
   padding: 1rem;
+  color: yellowgreen;
 }
 
 .movie-info .year {
@@ -467,13 +491,20 @@ body {
   }
 
   .result-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 20px;
+    justify-content: center;
+    gap: 30px; /* 让子元素之间有固定间距 */
   }
 
   .movie-info {
     text-align: left;
     padding-top: 0;
+    padding-left: 20px;
   }
 
   .movie-info .movie-misc-info {
