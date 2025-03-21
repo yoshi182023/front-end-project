@@ -1,8 +1,4 @@
 import { loadMovies, url } from './data';
-// const url = `https://api.themoviedb.org/3/trending/all/day?api_key=${TMDB_API_KEY}`;
-// const urlVideo = `https://api.themoviedb.org/3/movie/157336/videos?api_key=${TMDB_API_KEY}`;
-// const searchAPI = (searchTerm: string) =>
-//   `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=fc1fef96`;
 async function fetchData(url) {
   const response = await fetch(url);
   const data = await response.json();
@@ -138,7 +134,7 @@ function loadMovieDetails() {
       movie.addEventListener('click', async () => {
         $searchList.classList.add('hide-search-list'); // 隐藏搜索结果列表
         $movieSearchBox.value = ''; // 清空搜索框
-        const url = `http://www.omdbapi.com/?i=${movie.dataset.id}&apikey=fc1fef96`; // 使用类型断言
+        const url = `https://www.omdbapi.com/?i=${movie.dataset.id}&apikey=fc1fef96`; // 使用类型断言
         // 发送请求获取电影的详细信息
         const result = await fetch(url); // 根据 IMDb ID 获取电影详细信息
         const movieDetails = await result.json(); // 解析响应为 JSON
