@@ -139,16 +139,20 @@ body {
 /* 对应导航菜单中的每个链接（例如 Home、Movies、TV Shows、People）：
  */
 .nav.navbar-nav li a {
-  color: #c3073f;
-  font-size: 16px;
-  padding: 8px 16px;
+  color: greenyellow;
+  font-size: 19px;
+  padding: 18px 16px;
   text-decoration: none;
+  margin-left: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .navbar-nav {
   display: flex;
   justify-content: left; /* 可根据需求调整 */
   border-color: #c3073f;
+  list-style: none; /* 去掉黑点 */
 }
 
 .nav.navbar-nav li a:hover {

@@ -1,5 +1,4 @@
-import { loadMovies, url, loadPeople } from './data';
-// const TMDB_API_KEY = 'ad4c3c9eb50374bcf4ca0e3426d2c976';
+import { loadMovies, url } from './data';
 // const url = `https://api.themoviedb.org/3/trending/all/day?api_key=${TMDB_API_KEY}`;
 // const urlVideo = `https://api.themoviedb.org/3/movie/157336/videos?api_key=${TMDB_API_KEY}`;
 // const searchAPI = (searchTerm: string) =>
@@ -162,10 +161,6 @@ function addToFavorites(details) {
     (movie) => movie.imdbID === details.imdbID,
   );
   console.log('Is already favorite?', isAlreadyFavorite);
-  if (isAlreadyFavorite) {
-    // alert('This movie is already in your favorites!');
-    return;
-  }
   favorites.push(details);
   localStorage.setItem('favorites', JSON.stringify(favorites));
   console.log(
@@ -232,17 +227,17 @@ function displayMovieDetails(details) {
   }
   console.log('result', resultGrid);
 }
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.favorite-btn').forEach((button) => {
-    button.addEventListener('click', (event) => {
-      const target = event.target;
-      // const title = target.getAttribute('data-title')!;
-      // const poster = target.getAttribute('data-poster')!;
-      // addToFavorites(details);
-      console.log('localStorage.getItem', localStorage.getItem('favorites'));
-    });
-  });
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   document.querySelectorAll('.favorite-btn').forEach((button) => {
+//     button.addEventListener('click', () => {
+//       // const target = event.target as HTMLElement;
+//       // const title = target.getAttribute('data-title')!;
+//       // const poster = target.getAttribute('data-poster')!;
+//       addToFavorites(details);
+//       console.log('localStorage.getItem', localStorage.getItem('favorites'));
+//     });
+//   });
+// });
 // 点击页面其他区域时隐藏搜索结果列表 检查点击的目标是否是搜索输入框。如果不是，则隐藏搜索结果列表。
 window.addEventListener('click', (event) => {
   const target = event.target; // 类型断言为 HTMLElement
@@ -251,18 +246,20 @@ window.addEventListener('click', (event) => {
     $searchList?.classList.add('hide-search-list'); // 使用可选链
   }
 });
-const searchTypeSelect = document.getElementById('search-type');
-searchTypeSelect.addEventListener('change', () => {
-  const searchType = searchTypeSelect.value;
-  // 根据选择的类型更新搜索行为
-  if (searchType === 'person') {
-    // 如果选择了Person，执行演员搜索逻辑
-    loadPeople($movieSearchBox.value);
-  } else {
-    // 如果选择了Movie，执行电影搜索逻辑
-    loadMovies($movieSearchBox.value);
-  }
-});
+// const searchTypeSelect = document.getElementById(
+//   'search-type',
+// ) as HTMLSelectElement;
+// searchTypeSelect.addEventListener('change', () => {
+//   const searchType = searchTypeSelect.value;
+//   // 根据选择的类型更新搜索行为
+//   if (searchType === 'person') {
+//     // 如果选择了Person，执行演员搜索逻辑
+//     loadPeople($movieSearchBox.value);
+//   } else {
+//     // 如果选择了Movie，执行电影搜索逻辑
+//     loadMovies($movieSearchBox.value);
+//   }
+// });
 // 新增一个 loadPeople 函数来处理演员搜索
 // async function loadPeople(searchTerm: string): Promise<void> {
 //   const URL = `https://api.themoviedb.org/3/search/person?api_key=${TMDB_API_KEY}&query=${searchTerm}`; // 构建演员搜索的 URL
@@ -286,57 +283,50 @@ function findMovies() {
     }
   }
 }
-function findActors() {
-  const searchTerm = $movieSearchBox.value.trim(); // 获取输入框的值并去除首尾空格
-  if ($searchList) {
-    if (searchTerm && searchTerm.length > 0) {
-      // 如果不为空，显示搜索结果列表并调用 loadMovies 函数加载电影数据
-      $searchList.classList.remove('hide-search-list');
-      loadPeople(searchTerm); // 加载电影数据
-      console.log('loadMovie', loadPeople(searchTerm));
-      console.log('Searching person...');
-    } else {
-      // 如果为空，隐藏搜索结果列表
-      $searchList.classList.add('hide-search-list'); // 隐藏搜索结果列表
-      console.log('Searching person...');
-    }
-  }
-}
-document.addEventListener('DOMContentLoaded', () => {
-  const selectElement = document.getElementById('search-type');
-  if (selectElement) {
-    const searchTypeSelect = selectElement;
-    let currentSearchType = searchTypeSelect.value;
-    console.log('Initial value of search-type:', currentSearchType);
-    searchTypeSelect.addEventListener('change', () => {
-      currentSearchType = searchTypeSelect.value;
-      console.log('Selected search type:', currentSearchType);
-      findActors(); // 当选择变化时，重新执行搜索
-    });
-  } else {
-    console.log("Dropdown element with id 'search-type' not found!");
-  }
-});
+// function findActors(): void {
+//   const searchTerm = $movieSearchBox.value.trim(); // 获取输入框的值并去除首尾空格
+//   if ($searchList) {
+//     if (searchTerm && searchTerm.length > 0) {
+//       // 如果不为空，显示搜索结果列表并调用 loadMovies 函数加载电影数据
+//       $searchList.classList.remove('hide-search-list');
+//       loadPeople(searchTerm); // 加载电影数据
+//       console.log('loadMovie', loadPeople(searchTerm));
+//       console.log('Searching person...');
+//     } else {
+//       // 如果为空，隐藏搜索结果列表
+//       $searchList.classList.add('hide-search-list'); // 隐藏搜索结果列表
+//       console.log('Searching person...');
+//     }
+//   }
+// }
+// document.addEventListener('DOMContentLoaded', () => {
+//   const selectElement = document.getElementById('search-type');
+//   if (selectElement) {
+//     const searchTypeSelect = selectElement as HTMLSelectElement;
+//     let currentSearchType = searchTypeSelect.value;
+//     console.log('Initial value of search-type:', currentSearchType);
+//     searchTypeSelect.addEventListener('change', () => {
+//       currentSearchType = searchTypeSelect.value;
+//       console.log('Selected search type:', currentSearchType);
+//       findActors(); // 当选择变化时，重新执行搜索
+//     });
+//   } else {
+//     console.log("Dropdown element with id 'search-type' not found!");
+//   }
+// });
 // 渲染演员搜索结果
-function displayActorList(actors) {
-  if (!$searchList) return;
-  $searchList.innerHTML = '';
-  actors.forEach((actor) => {
-    const actorElement = document.createElement('div');
-    actorElement.classList.add('search-result');
-    actorElement.innerHTML = `
-            <img src="https://image.tmdb.org/t/p/w200${actor.profile_path}" alt="${actor.name}">
-            <p>${actor.name}</p>
-          `;
-    $searchList.appendChild(actorElement);
-  });
-}
+// function displayActorList(actors: any[]): void {
+//   if (!$searchList) return;
+//   $searchList.innerHTML = '';
+//   actors.forEach((actor) => {
+//     const actorElement = document.createElement('div');
+//     actorElement.classList.add('search-result');
+//     actorElement.innerHTML = `
+//             <img src="https://image.tmdb.org/t/p/w200${actor.profile_path}" alt="${actor.name}">
+//             <p>${actor.name}</p>
+//           `;
+//     $searchList.appendChild(actorElement);
+//   });
+// }
 console.log(findMovies());
-export {
-  fetchData,
-  loadMovies,
-  url,
-  loadPeople,
-  displayMovieList,
-  displayActorList,
-};
+export { fetchData, loadMovies, url, displayMovieList };

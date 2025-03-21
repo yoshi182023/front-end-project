@@ -196,11 +196,6 @@ function addToFavorites(details: MovieDetails): void {
   );
   console.log('Is already favorite?', isAlreadyFavorite);
 
-  if (isAlreadyFavorite) {
-    // alert('This movie is already in your favorites!');
-    return;
-  }
-
   favorites.push(details);
   localStorage.setItem('favorites', JSON.stringify(favorites));
   console.log(
@@ -273,17 +268,17 @@ function displayMovieDetails(details: MovieDetails): void {
 
   console.log('result', resultGrid);
 }
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.favorite-btn').forEach((button) => {
-    button.addEventListener('click', () => {
-      // const target = event.target as HTMLElement;
-      // const title = target.getAttribute('data-title')!;
-      // const poster = target.getAttribute('data-poster')!;
-      addToFavorites(details);
-      console.log('localStorage.getItem', localStorage.getItem('favorites'));
-    });
-  });
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   document.querySelectorAll('.favorite-btn').forEach((button) => {
+//     button.addEventListener('click', () => {
+//       // const target = event.target as HTMLElement;
+//       // const title = target.getAttribute('data-title')!;
+//       // const poster = target.getAttribute('data-poster')!;
+//       addToFavorites(details);
+//       console.log('localStorage.getItem', localStorage.getItem('favorites'));
+//     });
+//   });
+// });
 
 // 点击页面其他区域时隐藏搜索结果列表 检查点击的目标是否是搜索输入框。如果不是，则隐藏搜索结果列表。
 window.addEventListener('click', (event) => {
@@ -296,21 +291,21 @@ window.addEventListener('click', (event) => {
   }
 });
 
-const searchTypeSelect = document.getElementById(
-  'search-type',
-) as HTMLSelectElement;
+// const searchTypeSelect = document.getElementById(
+//   'search-type',
+// ) as HTMLSelectElement;
 
-searchTypeSelect.addEventListener('change', () => {
-  const searchType = searchTypeSelect.value;
-  // 根据选择的类型更新搜索行为
-  if (searchType === 'person') {
-    // 如果选择了Person，执行演员搜索逻辑
-    loadPeople($movieSearchBox.value);
-  } else {
-    // 如果选择了Movie，执行电影搜索逻辑
-    loadMovies($movieSearchBox.value);
-  }
-});
+// searchTypeSelect.addEventListener('change', () => {
+//   const searchType = searchTypeSelect.value;
+//   // 根据选择的类型更新搜索行为
+//   if (searchType === 'person') {
+//     // 如果选择了Person，执行演员搜索逻辑
+//     loadPeople($movieSearchBox.value);
+//   } else {
+//     // 如果选择了Movie，执行电影搜索逻辑
+//     loadMovies($movieSearchBox.value);
+//   }
+// });
 
 // 新增一个 loadPeople 函数来处理演员搜索
 // async function loadPeople(searchTerm: string): Promise<void> {

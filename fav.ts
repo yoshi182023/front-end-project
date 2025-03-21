@@ -8,11 +8,9 @@ interface Movie {
   imdbRating?: string;
 }
 
-// 读取收藏的电影数据（从 localStorage 获取）
+// 获取收藏的电影数据
 function getFavoriteMovies(): Movie[] {
   const favorites = localStorage.getItem('favorites');
-  console.log(favorites);
-  // 如果 favorites 为空，返回空数组 []，否则解析 JSON 数据并返回。
   return favorites ? JSON.parse(favorites) : [];
 }
 
@@ -20,13 +18,15 @@ function getFavoriteMovies(): Movie[] {
 function createMovieCard(movie: Movie): HTMLElement {
   const movieCard = document.createElement('div');
   movieCard.className = 'movie-card';
+  movieCard.dataset.id = movie.imdbID; // 绑定 IMDb ID
 
   movieCard.innerHTML = `
     <div class="movie-poster">
       <img src="${movie.Poster}" alt="${movie.Title}">
     </div>
     <div class="movie-info">
-      <h3>${movie.Title}</h3>     <h4>Rating: ${movie.imdbRating}</h4>
+      <h3>${movie.Title}</h3>
+      <h4>Rating: ${movie.imdbRating || 'N/A'}</h4>
       <p>Year: ${movie.Year}</p>
       <button class="remove-btn" data-id="${movie.imdbID}">Remove</button>
     </div>
@@ -44,25 +44,31 @@ function renderFavoriteMovies(): void {
   const movies = getFavoriteMovies();
 
   if (movies.length === 0) {
-    favList.innerHTML = '<p> No favorite movies added yet.</p>';
+    favList.innerHTML = '<p>No favorite movies added yet.</p>';
   } else {
     movies.forEach((movie) => {
-      const movieCard = createMovieCard(movie); // 遍历电影列表，创建并添加电影卡片
+      const movieCard = createMovieCard(movie);
       favList.appendChild(movieCard);
     });
 
     // 绑定移除按钮事件
-    // 获取页面上所有 class="remove-btn" 的按钮，返回一个 NodeList（类数组）
     document.querySelectorAll('.remove-btn').forEach((button) => {
       button.addEventListener('click', (event) => {
         const target = event.target as HTMLButtonElement;
-        // event.target 默认是 EventTarget 类型，无法直接访问 dataset.id
-        // as HTMLButtonElement 告诉 TypeScript："我确信这个元素是一个 <button>"，这样就可以安全地访问 dataset.id。
         const movieID = target.dataset.id;
-        // 从 data-id 属性中获取当前按钮对应的 电影 ID
-
         if (movieID) {
           removeFavoriteMovie(movieID);
+        }
+      });
+    });
+
+    // 绑定点击电影卡片打开详情模态框
+    document.querySelectorAll('.movie-card').forEach((card) => {
+      card.addEventListener('click', (event) => {
+        const target = event.currentTarget as HTMLElement;
+        const movieID = target.dataset.id;
+        if (movieID) {
+          showMovieDetails(movieID);
         }
       });
     });
@@ -77,5 +83,65 @@ function removeFavoriteMovie(imdbID: string): void {
   renderFavoriteMovies();
 }
 
-// 页面加载完成后渲染收藏列表
-document.addEventListener('DOMContentLoaded', renderFavoriteMovies);
+// 电影详情模态框
+function showMovieDetails(imdbID: string): void {
+  const movies = getFavoriteMovies();
+  const movie = movies.find((m) => m.imdbID === imdbID);
+  if (!movie) return;
+
+  // 创建模态框
+  const modalContainer = document.createElement('div');
+  modalContainer.classList.add('modal-overlay');
+  modalContainer.innerHTML = `
+    <div class="modal">
+      <span class="close-btn">&times;</span>
+      <h2>${movie.Title} (${movie.Year})</h2>
+      <img src="${movie.Poster}" alt="${movie.Title}">
+      <p><strong>IMDB Rating:</strong> ${movie.imdbRating || 'N/A'}</p>
+      <button class="trailer-btn">Watch Trailer</button>
+      <button class="close-btn">Close</button>
+    </div>
+  `;
+
+  document.body.appendChild(modalContainer);
+
+  // 关闭模态框
+  modalContainer.querySelector('.close-btn')!.addEventListener('click', () => {
+    modalContainer.remove();
+  });
+
+  //   modalContainer
+  //     .querySelector('.trailer-btn')!
+  //     .addEventListener('click', () => {
+  //       loadTrailer(imdbID, modalContainer);
+  //     });
+  // }
+
+  // 加载预告片
+  // const loadTrailer = async (
+  //   imdbID: string,
+  //   modalContainer: HTMLElement,
+  // ): Promise<void> => {
+  //   const TMDB_API_KEY = 'ad4c3c9eb50374bcf4ca0e3426d2c976';
+  //   const searchUrl = `https://api.themoviedb.org/3/movie/${imdbID}/videos?api_key=${TMDB_API_KEY}`;
+  //   const searchData = await fetchData(searchUrl);
+
+  //   console.log(searchData);
+
+  // 显示预告片
+  //   const trailerContainer = document.createElement('div');
+  //   trailerContainer.classList.add('trailer-container');
+  //   trailerContainer.innerHTML = `
+  //   <iframe
+  //                               className="embed-responsive-item"
+  //                               src={"videoUrl"}
+  //                               title="videos"
+  //                             ></iframe>
+  //   `;
+
+  //   modalContainer.appendChild(trailerContainer);
+  // };
+
+  // 页面加载完成后渲染收藏列表
+  document.addEventListener('DOMContentLoaded', renderFavoriteMovies);
+}
