@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Favorite Movies</title>
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">MovieTV</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/">Home</a></li>
+          <li class="active"><a href="fav.html">My Favorite</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>My Favorite Movies &amp; TV Shows</h2>
+      <!-- 容器用于显示收藏的电影信息 -->
+      <div id="fav-list" class="result-grid">
+        <!-- 收藏的电影将会动态插入这里 -->
+      </div>
+    </div>
+
+    <script src="js/fav.js"></script>
+  </body>
+</html>

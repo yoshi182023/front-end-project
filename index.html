@@ -1,20 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AJAX Project</title>
-  <link rel="icon" href="images/favicon.ico">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <header>
-  </header>
-  <main>
-  </main>
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX Project</title>
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">MovieTV</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+
+          <li><a href="fav.html">My favorites</a></li>
+        </ul>
+
+        <form class="navbar-form navbar-left" action="/results"></form>
+      </div>
+
+      <div class="search-container">
+        <div class="search-element">
+          <div class="form-row">
+            <select class="form-select" name="type" id="search-type">
+              <option value="movie">Movie</option>
+
+              <option value="person">Person</option>
+            </select>
+          </div>
+          <input
+            type="text"
+            pattern="[^\s]+"
+            id="movie-search-box"
+            class="form-control"
+            placeholder="Search Movie/TV Title ..."
+            name="search"
+            onkeyup="findMovies()"
+            onclick="findMovies()" />
+          <!-- <input
+            type="text"
+            pattern="[^\s]+"
+            id="movie-search-box"
+            class="form-control"
+            placeholder="Search Movie/TV Title ..."
+            name="search"
+            onkeyup="handleSearch()"
+            onclick="handleSearch()" /> -->
+
+          <div class="search-list" id="search-list">
+            <!-- 搜索结果将动态插入到这里 -->
+
+            <button class="btn btn-default" type="submit">
+              <i class="glyphicon glyphicon-search"></i> Search
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="result-container">
+          <div class="result-grid" id="result-grid">
+            <!-- movie information here -->
+          </div>
+        </div>
+      </div>
+      <div id="root"><div id="card-deck"></div></div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>

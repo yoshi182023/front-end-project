@@ -1,0 +1,525 @@
+body {
+  background-color: #000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.remove-btn {
+  border-radius: 0.25rem;
+  border-radius: 0.35rem;
+  border: none;
+  font-size: 1rem;
+  background-color: palevioletred;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #c3073f;
+  transform: scale(1.4) rotate(3deg); /* Combined scale and rotate */
+  transition: transform 0.2s ease-in-out;
+}
+
+.flip-card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: 1px solid #000;
+  perspective: 1000px;
+  border-radius: 15px;
+  width: 18%;
+  height: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* flip-card-inner 是 flip-card 的子元素，它控制卡片的 翻转动画，
+确保前后面翻转时能保持 3D 立体感。 */
+.flip-card-inner {
+  text-align: center;
+  transition: transform 5s;
+  transform-style: preserve-3d;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(241, 13, 13, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front {
+  display: flex;
+  flex-direction: column; /* 让内容垂直排列 */
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: transparent; /* 让整个卡片透明 */
+}
+
+.flip-card-img-container {
+  background-color: rgba(
+    191,
+    118,
+    191,
+    0.212
+  ); /* 让图片区域有自己的背景，不受 flip-card-front 影响 */
+}
+
+.flip-card-img-container img {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+/* flip-card-content 负责存放标题和简介 */
+.flip-card-content {
+  background-color: #bbb; /* 这里是灰色背景，确保只覆盖文字部分 */
+  padding: 10px;
+  text-align: center;
+}
+
+.flip-card-content h3 {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.flip-card-content p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row1 {
+  display: flex;
+  flex-wrap: wrap; /* 允许换行 */
+  gap: 30px; /* 让卡片之间有间距 */
+  justify-content: center; /* 让所有卡片居中对齐 */
+  align-items: center; /* 垂直对齐 */
+}
+
+.container-fluid2 {
+  font-size: 30px;
+  text-align: center;
+  color: #e3e4e1b4;
+  background-color: #42093fe5;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+
+.container-fluid3 {
+  text-align: center;
+  color: #1a1a1d;
+  background-color: palevioletred;
+  padding: 20px;
+}
+
+.flip-card-front p {
+  max-height: 13em;
+  overflow: hidden; /* 隐藏溢出内容 */
+  text-overflow: ellipsis; /* 添加省略号 */
+  white-space: nowrap; /* 防止换行 */
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #1a1a1d;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  border-radius: 0%;
+}
+
+.navbar-brand {
+  color: #c3073f;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/* 对应导航菜单中的每个链接（例如 Home、Movies、TV Shows、People）：
+ */
+.nav.navbar-nav li a {
+  color: #c3073f;
+  font-size: 16px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: left; /* 可根据需求调整 */
+  border-color: #c3073f;
+}
+
+.nav.navbar-nav li a:hover {
+  background-color: #c3073f;
+  color: white;
+}
+
+/* Navbar Form Styles */
+.navbar-form.navbar-left {
+  align-items: center;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 13px; /* 控制元素间距 */
+}
+
+.form-select,
+.form-control,
+.btn {
+  height: 36px;
+}
+
+.form-select {
+  width: 120px;
+  border-radius: 5px;
+  background-color: #c3073f;
+  color: #d6d6d6;
+  padding-left: 10px;
+}
+
+.btn {
+  border-radius: 5px;
+  background-color: #c3073f;
+  color: white;
+  padding: 5px 15px;
+}
+
+.input-group-btn button {
+  background-color: #c3073f;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.form-control {
+  width: 250px; /* 输入框的宽度 */
+  height: 34px; /* 输入框的高度 */
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.input-group-btn button i {
+  font-size: 18px;
+}
+
+.glyphicon.glyphicon-search {
+  color: white; /* 搜索图标颜色 */
+}
+
+.search-list-item {
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.search-list .search-list-item {
+  background-color: rgba(50, 6, 94, 0.804);
+  padding: 0.5rem;
+  border-bottom: 1px solid whitesmoke;
+  width: calc(350px - 8px);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+.search-list .search-list-item:hover {
+  background-color: #1f1f1f;
+}
+
+.search-container {
+  background-color: rgba(18, 4, 31, 0.89);
+  height: 180px;
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-color: #bbb;
+}
+
+.search-element {
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  position: relative;
+}
+
+.search-element h3 {
+  -ms-flex-item-align: center;
+  align-self: center;
+  margin-right: 1rem;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.search-element .form-control {
+  padding: 1rem 2rem;
+  font-size: 1.4rem;
+  border: none;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  outline: none;
+  color: rgb(61, 3, 3);
+  width: 350px;
+}
+
+/* .search-list-item {
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+} */
+
+.search-list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  max-height: 500px;
+  overflow-y: scroll;
+  z-index: 10;
+}
+
+.search-list-item .search-list {
+  background-color: rgba(50, 6, 94, 0.804);
+  padding: 0.5rem;
+  border-bottom: 1px solid whitesmoke;
+  width: calc(350px - 8px);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+/* .search-list .search-list-item:hover {
+  background-color: #1f1f1f;
+} */
+
+.search-item-thumbnail img {
+  width: 40px;
+  margin-right: 1rem;
+}
+
+.search-item-info h3 {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.search-item-info p {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+/* thumbnail */
+.search-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-list::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.search-list::-webkit-scrollbar-thumb {
+  background-color: gainsboro;
+  outline: none;
+  border-radius: 10px;
+}
+
+/* js related class */
+.hide-search-list {
+  display: none;
+}
+
+/* movie result */
+.result-container {
+  padding: 3rem 0;
+}
+
+.movie-poster img {
+  max-width: 300px;
+  max-height: 400px;
+  margin: 0 auto;
+  border: 4px solid #fff;
+  align-items: center;
+}
+
+.movie-info {
+  text-align: center;
+  color: #fff;
+  padding-top: 3rem;
+}
+
+/* movie info stylings */
+.movie-title {
+  font-size: 2rem;
+  color: var(--yellow-color);
+}
+
+.movie-misc-info {
+  list-style-type: none;
+  display: -webkit-box;
+  display: flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 1rem;
+  color: yellowgreen;
+}
+
+.movie-info .year {
+  font-weight: 500;
+}
+
+.movie-info .rated {
+  background-color: var(--yellow-color);
+  padding: 0.4rem;
+  margin: 0 0.4rem;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.movie-info .released {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.movie-info .writer {
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
+
+.movie-info .genre {
+  background-color: var(--light-dark-color);
+  display: inline-block;
+  padding: 0.5rem;
+  border-radius: 3px;
+}
+
+.movie-info .plot {
+  max-width: 400px;
+  margin: 1rem auto;
+}
+
+.movie-info .language {
+  color: var(--yellow-color);
+  font-style: italic;
+}
+
+.movie-info .awards {
+  font-weight: 300;
+  font-size: 0.9rem;
+}
+
+.movie-info .awards i {
+  color: var(--yellow-color);
+  margin: 1rem 0.7rem 0 0;
+}
+
+@media (width <= 450px) {
+  .logo p {
+    font-size: 1.4rem;
+  }
+
+  .search-element .form-control {
+    width: 90%;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+  }
+
+  .search-element h3 {
+    font-size: 1.4rem;
+  }
+
+  .search-list {
+    width: 90%;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .search-list .search-list-item {
+    width: 100%;
+  }
+
+  .movie-misc-info {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+  }
+
+  .movie-misc-info li:nth-child(2) {
+    margin: 0.8rem 0;
+  }
+}
+
+@media (width >= 800px) {
+  .search-element {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+  }
+
+  .search-element h3 {
+    margin-bottom: 0;
+  }
+
+  .result-grid {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 20px;
+    justify-content: center;
+    gap: 30px; /* 让子元素之间有固定间距 */
+  }
+
+  .movie-info {
+    text-align: left;
+    padding-top: 0;
+    padding-left: 20px;
+  }
+
+  .movie-info .movie-misc-info {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+
+  .movie-info .plot {
+    margin-left: 0;
+  }
+
+  .movie-info .writer {
+    padding-left: 0;
+    margin-left: 0;
+  }
+}
